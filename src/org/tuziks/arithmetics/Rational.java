@@ -47,6 +47,10 @@ public class Rational {
 		return r == null ? true : numerator.multiply(r.denominator).compareTo(r.numerator.multiply(denominator)) > 0;
 	}
 
+	public boolean isGreater(String expression) {
+		return isGreater(new Rational(expression));
+	}
+
 	public Rational neg() {
 		return new Rational(numerator.multiply(new BigInteger("-1")), denominator);
 	}
@@ -57,10 +61,18 @@ public class Rational {
 		return new Rational(numerator.multiply(r.denominator).add(r.numerator.multiply(denominator)), denominator.multiply(r.denominator));
 	}
 
+	public Rational add(String expression) {
+		return add(new Rational(expression));
+	}
+	
 	public Rational subtract(Rational r) {
 		if (r == null)
 			throw new IllegalArgumentException("Cannot subtract null");
 		return add(r.neg());
+	}
+	
+	public Rational subtract(String expression) {
+		return subtract(new Rational(expression));
 	}
 
 	public Rational multiply(Rational r) {
@@ -69,12 +81,19 @@ public class Rational {
 		return new Rational(numerator.multiply(r.numerator), denominator.multiply(r.denominator));
 	}
 
+	public Rational multiply(String expression) {
+		return multiply(new Rational(expression));
+	}
+
 	public Rational divide(Rational r) {
 		if (r == null)
 			throw new IllegalArgumentException("Cannot divide with null");
 		return new Rational(numerator.multiply(r.denominator), denominator.multiply(r.numerator));
 	}
-
+	public Rational divide(String expression) {
+		return divide(new Rational(expression));
+	}
+	
 	@Override
 	public String toString() {
 		String d = denominator.toString();

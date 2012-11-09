@@ -87,7 +87,14 @@ public class RationalTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testIsGreaterNull() throws Exception {
-		new Rational("1/3").isGreater(null);
+		String s = null;
+		new Rational("1/3").isGreater(s);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testIsGreaterRationalNull() throws Exception {
+		Rational r = null;
+		new Rational("1/3").isGreater(r);
 	}
 	
 	@Test
@@ -117,7 +124,14 @@ public class RationalTest {
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testAddNull() throws Exception {
-		new Rational("1/3").add(null);
+		String s = null;
+		new Rational("1/3").add(s);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testAddRationalNull() throws Exception {
+		Rational r = null;
+		new Rational("1/3").add(r);
 	}
 	
 	@Test
@@ -141,7 +155,14 @@ public class RationalTest {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testSubtractNull() throws Exception {
-		new Rational("1/3").subtract(null);
+		String s = null;
+		new Rational("1/3").subtract(s);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testSubtractRationalNull() throws Exception {
+		Rational r = null;
+		new Rational("1/3").subtract(r);
 	}
 
 	@Test
@@ -159,13 +180,19 @@ public class RationalTest {
 		assertEquals("8/15", r1.multiply(r2).toString());
 		assertEquals("8/15", r2.multiply(r1).toString());
 	}
-	
-	
+
 	@Test(expected = IllegalArgumentException.class)
 	public void testMultiplyNull() throws Exception {
-		new Rational("1/3").multiply(null);
+		String s = null;
+		new Rational("1/3").multiply(s);
 	}
 
+	@Test(expected = IllegalArgumentException.class)
+	public void testMultiplyRationalNull() throws Exception {
+		Rational r = null;
+		new Rational("1/3").multiply(r);
+	}
+	
 	@Test
 	public void testDivide() {
 		// 4/3 : 9/5 = 20/27
@@ -176,6 +203,19 @@ public class RationalTest {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testDivideNull() throws Exception {
-		new Rational("1/3").divide(null);
+		String s = null;
+		new Rational("1/3").divide(s);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testDivideRationalNull() throws Exception {
+		Rational i = null;
+		new Rational("1/3").divide(i);
+	}
+
+	@Test
+	public void testAllTogether() {
+		// -(((1/2 + 3/4) * ((5/6) / (7/8))) - 9/10) = -61/210
+		assertEquals("-61/210", new Rational("1/2").add("3/4").multiply("5/6").divide("7/8").subtract("9/10").neg().toString());
 	}
 }
