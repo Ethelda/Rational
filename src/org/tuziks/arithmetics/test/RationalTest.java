@@ -41,7 +41,26 @@ public class RationalTest {
     	new Rational("100/0");
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testCtorIllegalArgument2() throws Exception {
+    	new Rational(null);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCtorIllegalArgument3() throws Exception {
+    	new Rational("/");
+    }
     
+    @Test(expected = IllegalArgumentException.class)
+    public void testCtorIllegalArgument4() throws Exception {
+    	new Rational("1/");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testCtorIllegalArgument5() throws Exception {
+    	new Rational("/1");
+    }
+
 	@Test
 	public void testIsGreater() {
 		Rational r1 = new Rational("1/3");

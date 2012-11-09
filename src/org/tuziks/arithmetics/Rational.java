@@ -13,11 +13,15 @@ public class Rational {
 	}
 
 	private static String extractNumerator(String num) {
+		if (num == null)
+			throw new IllegalArgumentException("Expression cannot be null");
 		int p = num.indexOf("/");
 		return p > 0 ? num.substring(0, p) : num;
 	}
 
 	private static String extractDenumerator(String num) {
+		if (num == null)
+			throw new IllegalArgumentException("Expression cannot be null");
 		int p = num.indexOf("/");
 		return p > 0 ? num.substring(p + 1) : "1";
 	}
