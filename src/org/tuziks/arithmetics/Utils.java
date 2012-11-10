@@ -20,4 +20,9 @@ public class Utils {
 		}
 		return a;
 	}
+	
+	public static <T> void notNull(T value, String message) {
+		if (value == null)
+			throw new IllegalArgumentException(message);
+	}
 }

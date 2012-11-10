@@ -6,34 +6,30 @@ import static org.tuziks.arithmetics.Utils.*;
 public class Rational {
 	public final BigInteger numerator;
 	public final BigInteger denominator;
-
+	private static final int NUMERATOR = 0;
+	private static final int DENOMINATOR = 1;
+	
 	public Rational(String expression) {
-		this(extractNumerator(expression), extractDenumerator(expression));
+		this(rationalPartFrom(expression, NUMERATOR), rationalPartFrom(expression, DENOMINATOR));
 	}
 
-	private static String extractNumerator(String expression) {
-		if (expression == null)
-			throw new IllegalArgumentException("Expression cannot be null");
+	private static String rationalPartFrom(String expression, int part) {
+		notNull(expression, "Expression cannot be null");
 		int p = expression.indexOf("/");
-		return p > 0 ? expression.substring(0, p) : expression;
+		switch(part) {
+			case NUMERATOR: return p > 0 ? expression.substring(0, p) : expression;
+			case DENOMINATOR: return p > 0 ? expression.substring(p + 1) : "1";
+			default: throw new IllegalArgumentException("Unknown part type");
+		}
 	}
-
-	private static String extractDenumerator(String expression) {
-		if (expression == null)
-			throw new IllegalArgumentException("Expression cannot be null");
-		int p = expression.indexOf("/");
-		return p > 0 ? expression.substring(p + 1) : "1";
-	}
-
-	public Rational(String num, String denum) {
-		this(new BigInteger(num), new BigInteger(denum));
+	
+	public Rational(String numerator, String denominator) {
+		this(new BigInteger(numerator), new BigInteger(denominator));
 	}
 
 	public Rational(BigInteger numerator, BigInteger denominator) {
-		if (numerator == null)
-			throw new IllegalArgumentException("Numerator cannot be null");
-		if (denominator == null)
-			throw new IllegalArgumentException("Denominator cannot be null");
+		notNull(numerator, "Numerator cannot be null");
+		notNull(denominator, "Denominator cannot be null");
 		if (denominator.compareTo(BigInteger.ZERO) == 0)
 			throw new IllegalArgumentException("Denominator cannot be 0");
 		BigInteger gcd = gcd(numerator, denominator);
@@ -42,8 +38,7 @@ public class Rational {
 	}
 
 	public boolean isGreater(Rational r) {
-		if (r == null)
-			throw new IllegalArgumentException("Cannot compare to null");
+		notNull(r, "Cannot compare to null");
 		return r == null ? true : numerator.multiply(r.denominator).compareTo(r.numerator.multiply(denominator)) > 0;
 	}
 
@@ -56,8 +51,7 @@ public class Rational {
 	}
 
 	public Rational add(Rational r) {
-		if (r == null)
-			throw new IllegalArgumentException("Cannot add null");
+		notNull(r, "Cannot add null");
 		return new Rational(numerator.multiply(r.denominator).add(r.numerator.multiply(denominator)), denominator.multiply(r.denominator));
 	}
 
@@ -66,8 +60,7 @@ public class Rational {
 	}
 	
 	public Rational subtract(Rational r) {
-		if (r == null)
-			throw new IllegalArgumentException("Cannot subtract null");
+		notNull(r, "Cannot subtract null");
 		return add(r.neg());
 	}
 	
@@ -76,8 +69,7 @@ public class Rational {
 	}
 
 	public Rational multiply(Rational r) {
-		if (r == null)
-			throw new IllegalArgumentException("Cannot multiply with null");
+		notNull(r, "Cannot multiply with null");
 		return new Rational(numerator.multiply(r.numerator), denominator.multiply(r.denominator));
 	}
 
@@ -86,10 +78,10 @@ public class Rational {
 	}
 
 	public Rational divide(Rational r) {
-		if (r == null)
-			throw new IllegalArgumentException("Cannot divide with null");
+		notNull(r, "Cannot divide with null");
 		return new Rational(numerator.multiply(r.denominator), denominator.multiply(r.numerator));
 	}
+
 	public Rational divide(String expression) {
 		return divide(new Rational(expression));
 	}
