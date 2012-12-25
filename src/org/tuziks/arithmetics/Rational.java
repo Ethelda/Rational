@@ -3,7 +3,7 @@ package org.tuziks.arithmetics;
 import java.math.BigInteger;
 import static org.tuziks.arithmetics.Utils.*;
 
-public class Rational {
+public class Rational implements AritmeticalType<Rational> {
 	public final BigInteger numerator;
 	public final BigInteger denominator;
 	private static final int NUMERATOR = 0;
