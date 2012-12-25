@@ -5,13 +5,13 @@ import java.math.BigInteger;
 import static org.tuziks.arithmetics.Utils.gcd;
 import static org.tuziks.arithmetics.Utils.notNull;
 
-public class Rational implements AritmeticalType<Rational> {
+public class RationalValue implements BoxedValue<RationalValue> {
     public final BigInteger numerator;
     public final BigInteger denominator;
     private static final int NUMERATOR = 0;
     private static final int DENOMINATOR = 1;
 
-    public Rational(String expression) {
+    public RationalValue(String expression) {
         this(rationalPartFrom(expression, NUMERATOR), rationalPartFrom(expression, DENOMINATOR));
     }
 
@@ -28,11 +28,11 @@ public class Rational implements AritmeticalType<Rational> {
         }
     }
 
-    public Rational(String numerator, String denominator) {
+    public RationalValue(String numerator, String denominator) {
         this(new BigInteger(numerator), new BigInteger(denominator));
     }
 
-    public Rational(BigInteger numerator, BigInteger denominator) {
+    public RationalValue(BigInteger numerator, BigInteger denominator) {
         notNull(numerator, "Numerator cannot be null");
         notNull(denominator, "Denominator cannot be null");
         if (denominator.compareTo(BigInteger.ZERO) == 0)
@@ -42,53 +42,54 @@ public class Rational implements AritmeticalType<Rational> {
         this.denominator = denominator.divide(gcd);
     }
 
-    public boolean isGreater(Rational r) {
+    @Override
+    public boolean isGreater(RationalValue r) {
         notNull(r, "Cannot compare to null");
         return r == null ? true : numerator.multiply(r.denominator).compareTo(r.numerator.multiply(denominator)) > 0;
     }
 
     public boolean isGreater(String expression) {
-        return isGreater(new Rational(expression));
+        return isGreater(new RationalValue(expression));
     }
 
-    public Rational neg() {
-        return new Rational(numerator.multiply(new BigInteger("-1")), denominator);
+    public RationalValue neg() {
+        return new RationalValue(numerator.multiply(new BigInteger("-1")), denominator);
     }
 
-    public Rational add(Rational r) {
+    public RationalValue add(RationalValue r) {
         notNull(r, "Cannot add null");
-        return new Rational(numerator.multiply(r.denominator).add(r.numerator.multiply(denominator)), denominator.multiply(r.denominator));
+        return new RationalValue(numerator.multiply(r.denominator).add(r.numerator.multiply(denominator)), denominator.multiply(r.denominator));
     }
 
-    public Rational add(String expression) {
-        return add(new Rational(expression));
+    public RationalValue add(String expression) {
+        return add(new RationalValue(expression));
     }
 
-    public Rational subtract(Rational r) {
+    public RationalValue subtract(RationalValue r) {
         notNull(r, "Cannot subtract null");
         return add(r.neg());
     }
 
-    public Rational subtract(String expression) {
-        return subtract(new Rational(expression));
+    public RationalValue subtract(String expression) {
+        return subtract(new RationalValue(expression));
     }
 
-    public Rational multiply(Rational r) {
+    public RationalValue multiply(RationalValue r) {
         notNull(r, "Cannot multiply with null");
-        return new Rational(numerator.multiply(r.numerator), denominator.multiply(r.denominator));
+        return new RationalValue(numerator.multiply(r.numerator), denominator.multiply(r.denominator));
     }
 
-    public Rational multiply(String expression) {
-        return multiply(new Rational(expression));
+    public RationalValue multiply(String expression) {
+        return multiply(new RationalValue(expression));
     }
 
-    public Rational divide(Rational r) {
+    public RationalValue divide(RationalValue r) {
         notNull(r, "Cannot divide with null");
-        return new Rational(numerator.multiply(r.denominator), denominator.multiply(r.numerator));
+        return new RationalValue(numerator.multiply(r.denominator), denominator.multiply(r.numerator));
     }
 
-    public Rational divide(String expression) {
-        return divide(new Rational(expression));
+    public RationalValue divide(String expression) {
+        return divide(new RationalValue(expression));
     }
 
     @Override

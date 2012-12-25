@@ -1,6 +1,6 @@
 # Rational
 ========
-Java library for doing arithmetics with rational numbers.
+Arithmetic Java library on top of BigInteger and BigDecimal
 
 ## Supported operations:
 * add
