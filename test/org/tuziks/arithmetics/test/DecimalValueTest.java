@@ -50,4 +50,19 @@ public class DecimalValueTest {
 
         assertEquals(stuff, d.toString());
     }
+
+    @Test
+    public void testAppend4() {
+        DecimalValue d = new DecimalValue("");
+        assertEquals("0", d.toString());
+
+        d = new DecimalValue("                    ");
+        assertEquals("0", d.toString());
+
+        d = new DecimalValue(null);
+        assertEquals("0", d.toString());
+
+        d = new DecimalValue(".2");
+        assertEquals("0.2", d.toString());
+    }
 }

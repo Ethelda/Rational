@@ -13,11 +13,12 @@ public class DecimalValue implements BoxedValue<DecimalValue> {
     }
 
     public DecimalValue(String val) {
-        try {
-            value = new BigDecimal(val);
-        } catch (NumberFormatException nfe) {
-            value = BigDecimal.ZERO;
-        }
+        val = val == null ? "0" : val.trim();
+        if (val.length() == 0)
+            val = "0";
+        if (val.charAt(0) == '.')
+            val = "0" + val;
+        value = new BigDecimal(val);
         ds = false;
     }
 
