@@ -2,7 +2,6 @@ package org.tuziks.arithmetics.test;
 
 import org.junit.Test;
 import org.tuziks.arithmetics.RationalValue;
-import org.tuziks.arithmetics.RationalValue;
 
 import java.math.BigInteger;
 

@@ -3,15 +3,22 @@ package org.tuziks.arithmetics;
 import org.apache.commons.lang3.StringUtils;
 
 import java.math.BigDecimal;
-import java.math.BigInteger;
-import java.math.RoundingMode;
 
 public class DecimalValue implements BoxedValue<DecimalValue> {
-
+    public boolean ds;
     public BigDecimal value;
-    public DecimalValue(String val) {
-        value = new BigDecimal(val);
 
+    public DecimalValue() {
+        this("0");
+    }
+
+    public DecimalValue(String val) {
+        try {
+            value = new BigDecimal(val);
+        } catch (NumberFormatException nfe) {
+            value = BigDecimal.ZERO;
+        }
+        ds = false;
     }
 
     @Override
@@ -21,34 +28,32 @@ public class DecimalValue implements BoxedValue<DecimalValue> {
 
     @Override
     public DecimalValue append(String str) {
-        BigDecimal v = new BigDecimal("0" + str);
-        BigInteger vu = v.unscaledValue();
-
-        long l = vu.toString().length();
-        if (l > Integer.MAX_VALUE)
-            throw new IllegalArgumentException("Argument too big, max length: " + (Integer.MAX_VALUE - 1));
-
-
-        BigDecimal f = value.subtract(value.setScale(0, RoundingMode.FLOOR));
-
-        // jāpievieno aiz komata, ja:
-        if (f.compareTo(BigDecimal.ZERO) != 0)
-        {
-
-        }
-        else
-        {
-            if (vu.compareTo(BigInteger.ZERO) > 0) {
-                value = value
-                    .multiply(new BigDecimal("1" + StringUtils.repeat("0", (int)l)).setScale(0, RoundingMode.FLOOR))
-                    .add(v);
-            }
-        }
+        appendDecimalSeparator(str);
+        String ps = value.toPlainString();
+        if (hasDecimalSeparator() && !(ps + str).contains("."))
+            ps += ".";
+        value = new BigDecimal(ps + str);
         return this;
+    }
+
+    private void appendDecimalSeparator(String str) {
+        switch (StringUtils.countMatches(str, ".")) {
+            case 0:
+                return;
+            case 1:
+                if (!ds) {
+                    ds = true;
+                    return;
+                }
+        }
+        throw new IllegalArgumentException("Cannot append more than one decimal separator");
+    }
+
+    public boolean hasDecimalSeparator() {
+        return ds;
     }
 
     public String toString() {
         return value.toString();
     }
 }
-

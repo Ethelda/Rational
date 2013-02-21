@@ -1,10 +1,9 @@
 package org.tuziks.arithmetics.test;
 
 import org.junit.Test;
-import static org.junit.Assert.*;
 import org.tuziks.arithmetics.DecimalValue;
 
-import java.text.DecimalFormatSymbols;
+import static org.junit.Assert.*;
 
 public class DecimalValueTest {
     @Test
@@ -16,7 +15,7 @@ public class DecimalValueTest {
     }
 
     @Test
-    public void testAppend() {
+    public void testAppend1() {
         DecimalValue d = new DecimalValue("4");
         d.append("2");
         assertEquals("42", d.toString());
@@ -27,9 +26,28 @@ public class DecimalValueTest {
         d.append(".");
         assertEquals("42123", d.toString());
 
-
         d.append("1");
         assertEquals("42123.1", d.toString());
+    }
 
+    @Test
+    public void testAppend2() {
+        DecimalValue d = new DecimalValue();
+        d.append(".222");
+        assertEquals("0.222", d.toString());
+    }
+
+    @Test
+    public void testAppend3() {
+        DecimalValue d = new DecimalValue();
+        String stuff = "1000000000000000000000000000000000000133700000000000000000000000000000000000000000000000000001" +
+                "1234579656565265962654965962326549653.23456789101112131415161718192000000000000000000000000000" +
+                "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000001";
+
+        for (int i = 0; i < stuff.length(); i = i + 2) {
+            d.append(stuff.substring(i, i + 2));
+        }
+
+        assertEquals(stuff, d.toString());
     }
 }

@@ -6,6 +6,7 @@ import java.math.BigInteger;
 
 public class IntegerValue implements BoxedValue<IntegerValue> {
     public BigInteger value;
+
     public IntegerValue(String val) {
         value = new BigInteger(val);
     }

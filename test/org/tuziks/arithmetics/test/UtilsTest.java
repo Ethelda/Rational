@@ -16,5 +16,4 @@ public class UtilsTest {
         assertEquals(new BigInteger("0"), gcd(new BigInteger("0"), new BigInteger("0")));
         assertEquals(new BigInteger("5"), gcd(new BigInteger("-10"), new BigInteger("-5")));
     }
-
 }
