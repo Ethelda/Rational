@@ -220,4 +220,21 @@ public class RationalValueTest {
         // -(((1/2 + 3/4) * ((5/6) / (7/8))) - 9/10) = -61/210
         assertEquals("-61/210", new RationalValue("1/2").add("3/4").multiply("5/6").divide("7/8").subtract("9/10").neg().toString());
     }
+
+
+    @Test
+    public void testAppend() {
+        RationalValue r = new RationalValue();
+        assertEquals("", r.toString());
+        r.append("1");
+        assertEquals("1", r.toString());
+        r.append("/");
+        assertEquals("1", r.toString());
+        r.append("2");
+        assertEquals("1/2", r.toString());
+        r.append("25");
+        assertEquals("1/25", r.toString());
+
+
+    }
 }

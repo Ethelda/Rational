@@ -1,7 +1,5 @@
 package org.tuziks.arithmetics;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.math.BigInteger;
 
 import static org.tuziks.arithmetics.Utils.gcd;
@@ -12,6 +10,10 @@ public class RationalValue implements BoxedValue<RationalValue> {
     public final BigInteger denominator;
     private static final int NUMERATOR = 0;
     private static final int DENOMINATOR = 1;
+
+    public RationalValue() {
+        this("");
+    }
 
     public RationalValue(String expression) {
         this(rationalPartFrom(expression, NUMERATOR), rationalPartFrom(expression, DENOMINATOR));
@@ -96,7 +98,9 @@ public class RationalValue implements BoxedValue<RationalValue> {
 
     @Override
     public RationalValue append(String str) {
-        throw new NotImplementedException();
+
+
+        return this;
     }
 
     @Override

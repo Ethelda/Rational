@@ -1,11 +1,13 @@
 package org.tuziks.arithmetics;
 
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
-
 import java.math.BigInteger;
 
 public class IntegerValue implements BoxedValue<IntegerValue> {
     public BigInteger value;
+
+    public IntegerValue() {
+        this("0");
+    }
 
     public IntegerValue(String val) {
         value = new BigInteger(val);
@@ -18,13 +20,13 @@ public class IntegerValue implements BoxedValue<IntegerValue> {
 
     @Override
     public IntegerValue append(String str) {
-        throw new NotImplementedException();
+        value = new BigInteger(toString() + str);
+        return this;
     }
 
     @Override
     public String toString() {
-        throw new NotImplementedException();
+        return value.toString(10);
     }
-
 
 }
